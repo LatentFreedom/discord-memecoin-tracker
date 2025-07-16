@@ -18,7 +18,6 @@ client.on('ready', () => {
 async function updateStatus() {
   try {
     const { data } = await axios.get(API_URL);
-    console.log(data);
     const mcap = data.pair.fdv;
     client.user.setPresence({
       activities: [{ name: `MC: $${mcap}`, type: ActivityType.Watching }],
