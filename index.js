@@ -17,10 +17,10 @@ const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 function formatMarketCap(mcap) {
   if (!mcap || isNaN(mcap)) return 'N/A';
   
-  if (mcap >= 1e9) return `${(mcap / 1e9).toFixed(2)}B`;
-  if (mcap >= 1e6) return `${(mcap / 1e6).toFixed(2)}M`;
-  if (mcap >= 1e3) return `${(mcap / 1e3).toFixed(2)}K`;
-  return mcap.toFixed(2);
+  if (mcap >= 1e9) return `${(mcap / 1e9).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}B`;
+  if (mcap >= 1e6) return `${(mcap / 1e6).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}M`;
+  if (mcap >= 1e3) return `${(mcap / 1e3).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}K`;
+  return mcap.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
 
 async function updateStatus() {
