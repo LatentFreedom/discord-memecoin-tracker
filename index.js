@@ -39,8 +39,7 @@ async function updateStatus() {
       activities: [{ name: `MC $${formattedMcap}`, type: ActivityType.Watching }],
       status: 'online'
     });
-    
-    console.log(`Updated status: MC $${formattedMcap}`);
+
   } catch (error) {
     console.error('Failed to update status:', error.message);
     client.user.setPresence({
