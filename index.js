@@ -27,25 +27,35 @@ async function updateStatus() {
   try {
     const { data } = await axios.get(API_URL, { timeout: 10000 });
     
-    if (!data.pair || !data.pair.fdv) {
-      console.warn('Invalid API response structure');
+    if (!data || !data.pair || !data.pair.fdv) {
+      console.warn('Invalid API response structure:', data);
       return;
     }
     
     const mcap = data.pair.fdv;
     const formattedMcap = formatMarketCap(mcap);
     
-    client.user.setPresence({
+    await client.user.setPresence({
       activities: [{ name: `MC $${formattedMcap}`, type: ActivityType.Watching }],
       status: 'online'
     });
+    console.log(`Updated status: MC $${formattedMcap}`);
 
   } catch (error) {
-    console.error('Failed to update status:', error.message);
-    client.user.setPresence({
-      activities: [{ name: 'MC Loading...', type: ActivityType.Watching }],
-      status: 'idle'
-    });
+    if (error.response && error.response.status === 500) {
+      console.error('API Server Error (500) - retrying next cycle');
+    } else {
+      console.error('Failed to update status:', error.message);
+    }
+    
+    try {
+      await client.user.setPresence({
+        activities: [{ name: 'MC Loading...', type: ActivityType.Watching }],
+        status: 'idle'
+      });
+    } catch (presenceError) {
+      console.error('Failed to set idle presence:', presenceError.message);
+    }
   }
 }
 
