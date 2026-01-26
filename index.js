@@ -39,7 +39,6 @@ async function updateStatus() {
       activities: [{ name: `MC $${formattedMcap}`, type: ActivityType.Watching }],
       status: 'online'
     });
-    console.log(`Updated status: MC $${formattedMcap}`);
 
   } catch (error) {
     if (error.response && error.response.status === 500) {
