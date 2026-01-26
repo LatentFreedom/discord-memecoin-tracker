@@ -50,7 +50,6 @@ async function updateStatus() {
 }
 
 client.on('ready', () => {
-  console.log(`Logged in as ${client.user.tag}!`);
   updateStatus();
   setInterval(updateStatus, 30000); // 30s interval for better rate limiting
 });
@@ -60,7 +59,6 @@ client.on('error', (error) => {
 });
 
 process.on('SIGINT', () => {
-  console.log('Shutting down gracefully...');
   client.destroy();
   process.exit(0);
 });
